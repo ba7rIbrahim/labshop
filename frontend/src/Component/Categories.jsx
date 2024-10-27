@@ -1,22 +1,5 @@
 
-//   import * as React from 'react';
-// import Button from '@mui/material/Button';
-// import Stack from '@mui/material/Stack';
-
-// export default function Categories() {
-//   return (
-//     <Stack direction="row" spacing={2}>
-//       <Button variant="contained">Contained</Button>
-//       <Button variant="contained" disabled>
-//         Disabled
-//       </Button>
-//       <Button variant="contained" href="#contained-buttons">
-//         Link
-//       </Button>
-//     </Stack>
-//   );
-// }
-import * as React from 'react';
+//import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -24,21 +7,33 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Items from './items';
+
+
 
 const rows = [
-  { name: 'Dell',  fat: "Edit", carbs: "Delete" },
-  { name: 'Php',  fat: "Edit", carbs: "Delete" },
-  { name: 'Acer', fat: "Edit", carbs: "Delete" },
+  { name: 'Apple',ImageName:"",  actions: "Edit", actions2: "Delete" },
+  { name: 'Lenovo',ImageName:"",  actions: "Edit", actions2: "Delete" },
+  { name: 'Microsoft',ImageName:"",  actions: "Edit", actions2: "Delete"  },
+  { name: 'Toshiba',ImageName:"",  actions: "Edit", actions2: "Delete"  },
+  { name: 'Xiaomi',ImageName:"",  actions: "Edit", actions2: "Delete"  },
+  { name: 'Mediacom',ImageName:"",  actions: "Edit", actions2: "Delete"  },
+  { name: 'Samsung',ImageName:"",  actions: "Edit", actions2: "Delete"  },
 ];
 
 export default function Categories() {
   return (
+    <>
+<Items/>
+
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell   
- sx={{ backgroundColor: 'lightblue', fontWeight: 'bold' }}>CategoryName</TableCell>
+           sx={{ backgroundColor: 'lightblue', fontWeight: 'bold' }}>CategoryName</TableCell>
+         
+         <TableCell align="right" sx={{ backgroundColor: 'lightgreen', fontWeight: 'bold' }}>ImageName</TableCell>
             <TableCell align="right" sx={{ backgroundColor: 'lightgreen', fontWeight: 'bold' }}>Edit</TableCell>
             <TableCell align="right" sx={{ backgroundColor: 'lightpink', fontWeight: 'bold' }}>Delete</TableCell>
           </TableRow>
@@ -50,17 +45,18 @@ export default function Categories() {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">   
-
                 {row.name}
               </TableCell>
-            
-              <TableCell align="right">{row.fat}</TableCell>   
+              <TableCell align="right">{row.ImageName}</TableCell>
 
-              <TableCell align="right">{row.carbs}</TableCell>
+              <TableCell align="right">{row.actions}</TableCell>   
+
+              <TableCell align="right">{row.actions2}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+    </>
   );
 }

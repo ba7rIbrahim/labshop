@@ -1,9 +1,9 @@
 //import { useState } from 'react'
 //import reactLogo from './assets/react.svg'
 // viteLogo from '/vite.svg'
+import AdminPannel from './AdminPannel';
 import './App.css'
 import Categories from './Component/Categories';
-
 
 
 
@@ -12,7 +12,9 @@ function App() {
 
   return (
   <div>
-<Categories/>
+       {/* <Categories/>   */}
+      
+<AdminPannel/>
   </div>
 
   
