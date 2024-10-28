@@ -3,7 +3,7 @@
 // viteLogo from '/vite.svg'
 import AdminPannel from './AdminPannel';
 import './App.css'
-import Categories from './Component/Categories';
+// import Categories from './Component/Categories';
 
 
 
@@ -12,9 +12,9 @@ function App() {
 
   return (
   <div>
-       {/* <Categories/>   */}
+       {/* <Categories/>   */} {/* Error: This component show any route page */}
       
-<AdminPannel/>
+<AdminPannel/> {/* Error: This component show any route page */}
   </div>
 
   
