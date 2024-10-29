@@ -2,9 +2,14 @@
 //import reactLogo from './assets/react.svg'
 // viteLogo from '/vite.svg'
 import AdminPannel from './AdminPannel';
+<<<<<<< HEAD
 import './App.css';
 import { Route,Routes,Link } from 'react-router-dom';
 import Post from './Post';
+=======
+import './App.css'
+// import Categories from './Component/Categories';
+>>>>>>> 12cb5c4f20d0a417688712ed79a492044a39be87
 
 import { Home } from '@mui/icons-material';
 import PostDetails from './PostDetails';
@@ -37,6 +42,7 @@ function App() {
 //  const [count, setCount] = useState(0)
 
   return (
+<<<<<<< HEAD
   <>
   <postsContext.Provider value={postsData}>
   <div className="navbar" >
@@ -52,6 +58,13 @@ function App() {
             <button className="nav-button">Post</button>
             </Link>
         </div>
+=======
+  <div>
+       {/* <Categories/>   */} {/* Error: This component show any route page */}
+      
+<AdminPannel/> {/* Error: This component show any route page */}
+  </div>
+>>>>>>> 12cb5c4f20d0a417688712ed79a492044a39be87
 
   
     {/* Routes */}

@@ -3,6 +3,7 @@ import { Route,Routes,Link } from 'react-router-dom';
 import Categories from "./Component/Categories";
 import Items from "./Component/items";
 
+<<<<<<< HEAD
 
 export default function AdminPannel(){
     return(
@@ -38,3 +39,17 @@ export default function AdminPannel(){
 
 }
 
+=======
+export default function AdminPannel() {
+  return (
+    <>
+      <button>
+        <Categories />
+      </button>
+      <button>
+        <Items />
+      </button>
+    </>
+  );
+}
+>>>>>>> 12cb5c4f20d0a417688712ed79a492044a39be87
