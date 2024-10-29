@@ -40,3 +40,41 @@
 .read-the-docs {
   color: #888;
 }
+
+.navbar {
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+}
+
+.nav-button {
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff; /* Customize color as needed */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.nav-button:hover {
+  background-color: #0056b3; /* Slightly darker color for hover effect */
+}
+
+.nav-button-home{
+
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #28a745; /* Customize color as needed */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+}
+.nav-button-home:hover {
+  background-color: #0056b3; /* Slightly darker color for hover effect */
+}
