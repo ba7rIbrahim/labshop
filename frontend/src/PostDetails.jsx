@@ -10,28 +10,29 @@ export default function PostDetails(){
     });
 
     console.log(post)
+    if(post){
+      return(
+        <>
+        <h2>Test details pages</h2>
+        <h1>
+        {post.title}
+        </h1>
+        <p>
+          {post.body}
+        </p>
     
-    return(
-      <>
-      <h2>Test details pages</h2>
-      <h1>
-      {post.title}
-      </h1>
-      <p>
-        {post.body}
-      </p>
+        </>
+      
+    );
+    
   
-      </>
-    
-  );
+    }else{
+      <>
+       return(
+       <h1>the post with id:{post.Id} is not exits</h1>
 
-    // }else{
-    //   <>
-    //   return(
-    //     <h1>the post with id:{post.Id} is not exits</h1>
-
-    //   )
+     )
      
-    //   </>
-    // }
+      </>
+     }
 }

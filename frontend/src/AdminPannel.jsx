@@ -1,9 +1,9 @@
 
 import { Route,Routes,Link } from 'react-router-dom';
-import Categories from "./Component/Categories";
+import Categories from "./Categories";
 import Items from "./Component/items";
 
-<<<<<<< HEAD
+
 
 export default function AdminPannel(){
     return(
@@ -16,8 +16,7 @@ export default function AdminPannel(){
         </Link>
 
       <div className="navbar" >
-
-        <Link to="/Component/Categories">
+        <Link to="/Categories">
             <button className="nav-button">Categories</button>
             </Link>
             
@@ -28,8 +27,8 @@ export default function AdminPannel(){
 
   
    <Routes>
- <Route path='/Component/items'element={<Items/>} /> 
-<Route path='/Component/Categories' element={<Categories/>}/>
+ <Route path='./Component/items'element={<Items/>} /> 
+<Route path='/Categories' element={<Categories/>}/>
 </Routes>
 
   
@@ -38,18 +37,3 @@ export default function AdminPannel(){
     );
 
 }
-
-=======
-export default function AdminPannel() {
-  return (
-    <>
-      <button>
-        <Categories />
-      </button>
-      <button>
-        <Items />
-      </button>
-    </>
-  );
-}
->>>>>>> 12cb5c4f20d0a417688712ed79a492044a39be87
