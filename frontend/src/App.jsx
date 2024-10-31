@@ -1,73 +1,74 @@
 //import { useState } from 'react'
 //import reactLogo from './assets/react.svg'
 // viteLogo from '/vite.svg'
-import AdminPannel from './AdminPannel';
-import './App.css';
-import { Route,Routes,Link } from 'react-router-dom';
-import Post from './Post';
+import { Route,Link,Routes } from "react-router-dom";
+import { postsContext } from "./Context/PostsContext";
+import PostDetails from "./Component/PostDetails";
+import Home from './Component/Home';
+import NotFound from './Component/NotFound'
+import PostList  from './Component/PostList'
+//import Header from "./Component/Home";
+import Newpost from "./Component/Newpost";
+import DeletePost from "./Component/DeletePost";
+import PostLayout from "./Component/PostLayout";
+import Categories from "./Component/Categories";
+import Items from "./Component/items";
+import ItemList from "./Component/ItemList";
+import Header from "./Header/Header";
 
-import { Home } from '@mui/icons-material';
-import PostDetails from './PostDetails';
-import { postsContext } from './Context/PostsContext';
-import NotFound from './NotFound';
 
 
 function App() {
-
-  let postsData=[
+  let postsData = [
     {
-      id:1,
-      title:"first post",
-      body:"csv"
+      id: 1,
+      title: "first post",
+      body: "csv",
     },
     {
-      id:2,
-      title:"Second post",
-      body:"csv"
-  
+      id: 2,
+      title: "Second post",
+      body: "csv",
     },
     {
-      id:3,
-      title:"Third post",
-      body:"csv"
-  
-    }
+      id: 3,
+      title: "Third post",
+      body: "csv",
+    },
   ];
-  
 
   return (
   <>
-  <postsContext.Provider value={postsData}>
-  <div className="navbar" >
-          <Link to="/AdminPannel">
-            <button className="nav-button-home">Admin Pannel</button>
-            </Link>
-          
-            <Link to="/home">
-            <button className="nav-button-home">Home</button>
-            </Link>
-           
-           <Link to="/Post">
-            <button className="nav-button">Post</button>
-            </Link>
-        </div>
 
+  <postsContext.Provider value={postsData}>
+  <Header/>
   
     {/* Routes */}
 <Routes>
- <Route path='/AdminPannel'element={<AdminPannel/>} /> 
+ 
+<Route  path='/Posts' element={<PostLayout/>}>
+<Route  index element={<PostList/>}/>
+<Route path=':PostId' element={<PostDetails/>}/>
+<Route path="new" element={<Newpost/>}/>
+<Route path="delete" element={<DeletePost/>}/>
 
-<Route path='/Post' element={<Post/>}/>
+
+</Route>
+
 <Route path='/' element={<Home/>}/>
 <Route path='/home' element={<Home/>}/>
-<Route path='/PostDetails/:PostId' element={<PostDetails/>}/>
-
  <Route path="*" element={<NotFound/>}/> 
+ <Route path="/" element={<Home />} />
+      
+        <Route path="/Categories" element={<Categories />} />
+        <Route path="/Items" element={<Items/>} />
+        <Route path="/ItemList" element={<ItemList/>} />
 </Routes>
 </postsContext.Provider>
 </>
    
   );
+
 }
 
-export default App
+export default App;
