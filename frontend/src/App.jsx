@@ -1,7 +1,7 @@
 //import { useState } from 'react'
 //import reactLogo from './assets/react.svg'
 // viteLogo from '/vite.svg'
-import { Route,Link,Routes } from "react-router-dom";
+import { Route,Routes } from "react-router-dom";
 import { postsContext } from "./Context/PostsContext";
 import PostDetails from "./Component/PostDetails";
 import Home from './Component/Home';
@@ -15,6 +15,7 @@ import Categories from "./Component/Categories";
 import Items from "./Component/items";
 import ItemList from "./Component/ItemList";
 import Header from "./Header/Header";
+import Cart from "./Component/Cart";
 
 
 
@@ -63,6 +64,7 @@ function App() {
         <Route path="/Categories" element={<Categories />} />
         <Route path="/Items" element={<Items/>} />
         <Route path="/ItemList" element={<ItemList/>} />
+        <Route path="/Cart" element={<Cart/>} />
 </Routes>
 </postsContext.Provider>
 </>

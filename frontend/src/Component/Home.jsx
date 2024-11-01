@@ -28,7 +28,7 @@ export default function Home() {
           <Button color="inherit" component={Link} to="/">Home</Button>
           <Button color="inherit" component={Link} to="/Categories">Categories</Button>
           <Button color="inherit" component={Link} to="/Items">Items</Button>
-         
+          <Button color="inherit" component={Link} to="/Cart">Cart</Button> {/* زر Cart */}
         </Toolbar>
       </AppBar>
 
