@@ -12,10 +12,10 @@ import Newpost from "./Component/Newpost";
 import DeletePost from "./Component/DeletePost";
 import PostLayout from "./Component/PostLayout";
 import Categories from "./Component/Categories";
-import Items from "./Component/items";
 import ItemList from "./Component/ItemList";
 import Header from "./Header/Header";
 import Cart from "./Component/Cart";
+import Items from "./Component/Items";
 
 
 

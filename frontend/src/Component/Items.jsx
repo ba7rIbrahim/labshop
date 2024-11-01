@@ -1,177 +1,145 @@
-
-// //import * as React from 'react';
-// import Table from '@mui/material/Table';
-// import TableBody from '@mui/material/TableBody';
-// import TableCell from '@mui/material/TableCell';
-// import TableContainer from '@mui/material/TableContainer';
-// import TableHead from '@mui/material/TableHead';
-// import TableRow from '@mui/material/TableRow';
-// import Paper from '@mui/material/Paper';
-
-
-// export default function Items(){
-
-// const rows = [
-//     {Image:"test", ItemName:"Stream11-y",CategoryName:"Apple",  price: "5000", actions1:<button>Edit</button>,actions2: <button>Delete</button>  },
-//     {Image:"", ItemName:"Stream11-y",CategoryName:"Apple",  price: "5000", actions1:<button>Edit</button>,actions2: <button>Delete</button>  },
-//     {Image:"", ItemName:"Stream11-y",CategoryName:"Apple",  price: "5000", actions1:<button>Edit</button>,actions2: <button>Delete</button> },
-//     {Image:"", ItemName:"Stream11-y",CategoryName:"Apple",  price: "5000", actions1:<button>Edit</button> ,actions2: <button>Delete</button> },
-//   ];
-//     return(
-//        <>
-       
-//     <TableContainer component={Paper}>
-//       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-//         <TableHead>
-//           <TableRow>
-//             <TableCell sx={{ backgroundColor: 'lightblue', fontWeight: 'bold' }}>Image</TableCell>
-//          <TableCell align="right" sx={{ backgroundColor: 'lightgreen', fontWeight: 'bold' }}>ItemName</TableCell>
-//             <TableCell align="right" sx={{ backgroundColor: 'lightgreen', fontWeight: 'bold' }}>CategoryName</TableCell>
-//             <TableCell align="right" sx={{ backgroundColor: 'lightpink', fontWeight: 'bold' }}>price</TableCell>
-//             <TableCell align="right" sx={{ backgroundColor: 'lightgreen', fontWeight: 'bold' }}>Edit</TableCell>
-//             <TableCell align="right" sx={{ backgroundColor: 'lightgreen', fontWeight: 'bold' }}>Delete</TableCell>
-//           </TableRow>
-//         </TableHead>
-//         <TableBody>
-//           {rows.map((row) => (
-//             <TableRow
-//               key={row.name}
-//               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-//             >
-//               <TableCell component="th" scope="row"> 
-//                 {row.Image}
-//               </TableCell>
-//               <TableCell align="right">{row.ItemName}</TableCell>
-//               <TableCell align="right">{row.CategoryName}</TableCell>
-//               <TableCell align="right">{row.price}</TableCell>
-//               <TableCell align="right">{row.actions1}</TableCell>
-//               <TableCell align="right">{row.actions2}</TableCell>
-  
-//             </TableRow>
-//           ))}
-//         </TableBody>
-//       </Table>
-//     </TableContainer>
-
-//        </>
-//     );
-// }
-
-
-import {  TextField, Button } from '@mui/material'
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { TextField, Button, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
 import { useState } from 'react';
 
+export default function Items() {
+  const [deviceInputValue, setDeviceInputValue] = useState("");
 
-export default function Items(){
+  const [rows, setRows] = useState([
+    { id: 1, Image: "#", ItemName: "Yoga 900-13ISK", CategoryName: "Apple", price: "5000" },
+    { id: 2, Image: "#", ItemName: "IdeaPad 100S-14IBR", CategoryName: "Apple", price: "5000" },
+    { id: 3, Image: "#", ItemName: "Inspiron 3567", CategoryName: "Apple", price: "5000" },
+    { id: 4, Image: "#", ItemName: "Pavilion 15-AW003nv", CategoryName: "Apple", price: "5000" },
+  ]);
 
-const[deviceInputValue,setDeviceInputValue]=useState("")
+  let nextId = rows.length + 1;
 
-const[rows,setRows]=useState([
+  // Add
+  function handleAddClick() {
+    if (deviceInputValue.trim() !== "") {
+      setRows([...rows, { id: nextId, ItemName: deviceInputValue, Image: "" }]);
+      nextId += 1;
+      setDeviceInputValue(""); // Clear input after adding
+    }
+  }
 
-{id:1,Image:"test", ItemName:"Stream11-y",CategoryName:"Apple",  price: "5000"},
-  {id:2 ,Image:"", ItemName:"Stream11-y",CategoryName:"Apple",  price: "5000" },
-   {id: 3,Image:"", ItemName:"Stream11-y",CategoryName:"Apple",  price: "5000"},
-  {id:4 ,Image:"", ItemName:"Stream11-y",CategoryName:"Apple",  price: "5000" },
-]);
+  // Delete
+  function handleDeleteClick(id) {
+    const newDevice = rows.filter((device) => device.id !== id);
+    setRows(newDevice);
+  }
 
-let nextId = rows.length + 1;
-
-//Add
-function handleAddClick(){
-  if (deviceInputValue.trim() !== "") {
-    setRows([...rows, { id: nextId, ItemName: deviceInputValue, ImageName: "" }]);
-    nextId += 1;
-    setDeviceInputValue(""); // Clear input after adding
-}
-}
-//Delete
-function handleDeleteClick(id){
-
-const newDevice=rows.filter((device)=>{
-return device.id!=id;
-});
-setRows(newDevice);
-}
-//Edit
-function  handleEditClick(id){
-const NewDevices= rows.map((device)=>{
-if(device.id==id){
-  let newdevice={...device,name:device.name+"0"};
-    return newdevice
-}else
-return device
-})
-setRows(NewDevices)
-}
+  // Edit
+  function handleEditClick(id) {
+    const NewDevices = rows.map((device) => {
+      if (device.id === id) {
+        let newdevice = { ...device, ItemName: device.ItemName + " (edited)" };
+        return newdevice;
+      } else return device;
+    });
+    setRows(NewDevices);
+  }
 
   return (
-    <>
-    {/* to add in array */}
-   <div style={{ marginTop: "50px", display: 'flex', gap: '10px', alignItems: 'center' }}>
-  <TextField
-    label="Item Name"
-    variant="outlined"
-    value={deviceInputValue}
-    onChange={(e) => setDeviceInputValue(e.target.value)}
-    placeholder="Enter new category name"
-    size="small"
-    sx={{ width: '250px' }}
-  />
-  <Button
-    variant="contained"
-    color="primary"
-    onClick={handleAddClick}
-    sx={{ height: '40px' }}
-  >
-    Add Items
-  </Button>
-</div>
-   
-    <TableContainer component={Paper} style={{marginTop:"50px"}}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-          <TableCell sx={{ backgroundColor: 'lightblue', fontWeight: 'bold' }}>Image</TableCell>
-         <TableCell align="right" sx={{ backgroundColor: 'lightgreen', fontWeight: 'bold' }}>ItemName</TableCell>
-            <TableCell align="right" sx={{ backgroundColor: 'lightgreen', fontWeight: 'bold' }}>CategoryName</TableCell>
-            <TableCell align="right" sx={{ backgroundColor: 'lightpink', fontWeight: 'bold' }}>price</TableCell>
-             <TableCell align="right" sx={{ backgroundColor: 'lightgreen', fontWeight: 'bold' }}>Edit</TableCell>
-             <TableCell align="right" sx={{ backgroundColor: 'lightgreen', fontWeight: 'bold' }}>Delete</TableCell>
-           </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) =>(
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-          
-              <TableCell align="right">{row.ImageName}</TableCell>
-              <TableCell align="right">{row.ItemName}</TableCell>
-              <TableCell align="right">{row.CategoryName}</TableCell>
-              <TableCell align="right">{row.price}</TableCell>
-               <TableCell align="right">
-             <button onClick={(()=>{
-                handleEditClick(row.id)
-            })} >Edit</button>
-             </TableCell> 
-             <TableCell align="right">
-             <button onClick={(()=>{
-                handleDeleteClick(row.id)  })} >Delete</button>
-             </TableCell> 
-              
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    </>
-  );
+    <Container maxWidth="md" sx={{ marginTop: "50px", display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+      <Typography variant="h4" gutterBottom sx={{ color: "#37474f", fontWeight: "bold", marginBottom: "20px" }}>
+        Items Management
+      </Typography>
 
+      {/* إضافة عنصر جديد */}
+      <div style={{ marginBottom: "30px", display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
+        <TextField
+          label="Item Name"
+          variant="outlined"
+          value={deviceInputValue}
+          onChange={(e) => setDeviceInputValue(e.target.value)}
+          placeholder="Enter new item name"
+          size="small"
+          sx={{
+            width: '250px',
+            backgroundColor: "#f1f8e9",
+            borderRadius: 1,
+            "& .MuiOutlinedInput-root": {
+              "&:hover fieldset": {
+                borderColor: "#66bb6a",
+              }
+            }
+          }}
+        />
+        <Button
+          variant="contained"
+          color="success"
+          onClick={handleAddClick}
+          sx={{
+            height: '40px',
+            backgroundColor: "#66bb6a",
+            "&:hover": {
+              backgroundColor: "#43a047"
+            }
+          }}
+        >
+          Add Item
+        </Button>
+      </div>
+
+      {/* جدول العناصر */}
+      <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius: 2 }}>
+        <Table sx={{ minWidth: 650 }} aria-label="items table">
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{ backgroundColor: '#4db6ac', fontWeight: 'bold', color: "white" }}>Image</TableCell>
+              <TableCell align="right" sx={{ backgroundColor: '#4db6ac', fontWeight: 'bold', color: "white" }}>Item Name</TableCell>
+              <TableCell align="right" sx={{ backgroundColor: '#4db6ac', fontWeight: 'bold', color: "white" }}>Category Name</TableCell>
+              <TableCell align="right" sx={{ backgroundColor: '#81c784', fontWeight: 'bold', color: "white" }}>Price</TableCell>
+              <TableCell align="right" sx={{ backgroundColor: '#81c784', fontWeight: 'bold', color: "white" }}>Edit</TableCell>
+              <TableCell align="right" sx={{ backgroundColor: '#e57373', fontWeight: 'bold', color: "white" }}>Delete</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell align="right">{row.Image}</TableCell>
+                <TableCell align="right">{row.ItemName}</TableCell>
+                <TableCell align="right">{row.CategoryName}</TableCell>
+                <TableCell align="right">{row.price}</TableCell>
+                <TableCell align="right">
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => handleEditClick(row.id)}
+                    size="small"
+                    sx={{
+                      borderColor: "#64b5f6",
+                      color: "#64b5f6",
+                      "&:hover": {
+                        backgroundColor: "#bbdefb",
+                      }
+                    }}
+                  >
+                    Edit
+                  </Button>
+                </TableCell>
+                <TableCell align="right">
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => handleDeleteClick(row.id)}
+                    size="small"
+                    sx={{
+                      borderColor: "#e57373",
+                      color: "#e57373",
+                      "&:hover": {
+                        backgroundColor: "#ffcdd2",
+                      }
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
+  );
 }
