@@ -1,145 +1,200 @@
-import { TextField, Button, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
-import { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 
 export default function Items() {
-  const [deviceInputValue, setDeviceInputValue] = useState("");
+  const [products, setProducts] = useState([]);
+  const [customProducts, setCustomProducts] = useState([]);
+  const [newProduct, setNewProduct] = useState({ title: "", price: "", category: "", image: "" });
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
 
-  const [rows, setRows] = useState([
-    { id: 1, Image: "#", ItemName: "Yoga 900-13ISK", CategoryName: "Apple", price: "5000" },
-    { id: 2, Image: "#", ItemName: "IdeaPad 100S-14IBR", CategoryName: "Apple", price: "5000" },
-    { id: 3, Image: "#", ItemName: "Inspiron 3567", CategoryName: "Apple", price: "5000" },
-    { id: 4, Image: "#", ItemName: "Pavilion 15-AW003nv", CategoryName: "Apple", price: "5000" },
-  ]);
+  useEffect(() => {
+    axios
+      .get("https://fakestoreapi.com/products")
+      .then((response) => setProducts(response.data))
+      .catch((error) => console.error("Error fetching products:", error));
+  }, []);
 
-  let nextId = rows.length + 1;
-
-  // Add
-  function handleAddClick() {
-    if (deviceInputValue.trim() !== "") {
-      setRows([...rows, { id: nextId, ItemName: deviceInputValue, Image: "" }]);
-      nextId += 1;
-      setDeviceInputValue(""); // Clear input after adding
+  const handleAddProduct = () => {
+    if (newProduct.title && newProduct.price && newProduct.category && newProduct.image) {
+      setCustomProducts([...customProducts, { ...newProduct, id: Date.now() }]);
+      setSnackbar({ open: true, message: "Product added successfully!", severity: "success" });
+      setNewProduct({ title: "", price: "", category: "", image: "" });
+    } else {
+      setSnackbar({ open: true, message: "Please fill out all fields.", severity: "error" });
     }
-  }
+  };
 
-  // Delete
-  function handleDeleteClick(id) {
-    const newDevice = rows.filter((device) => device.id !== id);
-    setRows(newDevice);
-  }
+  const handleDeleteProduct = (id) => {
+    setCustomProducts(customProducts.filter((product) => product.id !== id));
+    setSnackbar({ open: true, message: "Product deleted successfully!", severity: "success" });
+  };
 
-  // Edit
-  function handleEditClick(id) {
-    const NewDevices = rows.map((device) => {
-      if (device.id === id) {
-        let newdevice = { ...device, ItemName: device.ItemName + " (edited)" };
-        return newdevice;
-      } else return device;
+  const handleEditProduct = (id) => {
+    const updatedProducts = customProducts.map((product) => {
+      if (product.id === id) {
+        const updatedProduct = { ...product, title: product.title + " (Edited)" };
+        return updatedProduct;
+      }
+      return product;
     });
-    setRows(NewDevices);
-  }
+    setCustomProducts(updatedProducts);
+    setSnackbar({ open: true, message: "Product updated successfully!", severity: "success" });
+  };
 
   return (
-    <Container maxWidth="md" sx={{ marginTop: "50px", display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-      <Typography variant="h4" gutterBottom sx={{ color: "#37474f", fontWeight: "bold", marginBottom: "20px" }}>
-        Items Management
+    <div
+      style={{
+        backgroundColor: "#f9f9f9",
+        minHeight: "100vh",
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Typography
+        variant="h2"
+        component="h1"
+        style={{
+          color: "#3f51b5",
+          textAlign: "center",
+          marginBottom: "30px",
+          fontWeight: "bold",
+        }}
+      >
+        Welcome to the Products Dashboard
       </Typography>
 
-      {/* إضافة عنصر جديد */}
-      <div style={{ marginBottom: "30px", display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ width: "80%", marginBottom: "30px" }}>
+        <Typography variant="h5" gutterBottom style={{ color: "#3f51b5" }}>
+          Add a Custom Product
+        </Typography>
         <TextField
-          label="Item Name"
-          variant="outlined"
-          value={deviceInputValue}
-          onChange={(e) => setDeviceInputValue(e.target.value)}
-          placeholder="Enter new item name"
-          size="small"
-          sx={{
-            width: '250px',
-            backgroundColor: "#f1f8e9",
-            borderRadius: 1,
-            "& .MuiOutlinedInput-root": {
-              "&:hover fieldset": {
-                borderColor: "#66bb6a",
-              }
-            }
-          }}
+          label="Title"
+          value={newProduct.title}
+          onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })}
+          fullWidth
+          style={{ marginBottom: "10px" }}
         />
-        <Button
-          variant="contained"
-          color="success"
-          onClick={handleAddClick}
-          sx={{
-            height: '40px',
-            backgroundColor: "#66bb6a",
-            "&:hover": {
-              backgroundColor: "#43a047"
-            }
-          }}
-        >
-          Add Item
+        <TextField
+          label="Price"
+          type="number"
+          value={newProduct.price}
+          onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+          fullWidth
+          style={{ marginBottom: "10px" }}
+        />
+        <TextField
+          label="Category"
+          value={newProduct.category}
+          onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
+          fullWidth
+          style={{ marginBottom: "10px" }}
+        />
+        <TextField
+          label="Image URL"
+          value={newProduct.image}
+          onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}
+          fullWidth
+          style={{ marginBottom: "10px" }}
+        />
+        <Button variant="contained" color="primary" onClick={handleAddProduct}>
+          Add Product
         </Button>
       </div>
 
-      {/* جدول العناصر */}
-      <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius: 2 }}>
-        <Table sx={{ minWidth: 650 }} aria-label="items table">
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ backgroundColor: '#4db6ac', fontWeight: 'bold', color: "white" }}>Image</TableCell>
-              <TableCell align="right" sx={{ backgroundColor: '#4db6ac', fontWeight: 'bold', color: "white" }}>Item Name</TableCell>
-              <TableCell align="right" sx={{ backgroundColor: '#4db6ac', fontWeight: 'bold', color: "white" }}>Category Name</TableCell>
-              <TableCell align="right" sx={{ backgroundColor: '#81c784', fontWeight: 'bold', color: "white" }}>Price</TableCell>
-              <TableCell align="right" sx={{ backgroundColor: '#81c784', fontWeight: 'bold', color: "white" }}>Edit</TableCell>
-              <TableCell align="right" sx={{ backgroundColor: '#e57373', fontWeight: 'bold', color: "white" }}>Delete</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell align="right">{row.Image}</TableCell>
-                <TableCell align="right">{row.ItemName}</TableCell>
-                <TableCell align="right">{row.CategoryName}</TableCell>
-                <TableCell align="right">{row.price}</TableCell>
-                <TableCell align="right">
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={() => handleEditClick(row.id)}
-                    size="small"
-                    sx={{
-                      borderColor: "#64b5f6",
-                      color: "#64b5f6",
-                      "&:hover": {
-                        backgroundColor: "#bbdefb",
-                      }
-                    }}
-                  >
-                    Edit
-                  </Button>
-                </TableCell>
-                <TableCell align="right">
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    onClick={() => handleDeleteClick(row.id)}
-                    size="small"
-                    sx={{
-                      borderColor: "#e57373",
-                      color: "#e57373",
-                      "&:hover": {
-                        backgroundColor: "#ffcdd2",
-                      }
-                    }}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
+      <div style={{ width: "80%" }}>
+        <Typography
+          variant="h4"
+          component="h2"
+          gutterBottom
+          style={{ textAlign: "center", color: "#3f51b5", marginBottom: "20px" }}
+        >
+          Custom Products List
+        </Typography>
+        <TableContainer component={Paper} style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}>
+          {/* <Table>
+            <TableHead style={{ backgroundColor: "#e3f2fd" }}>
+              <TableRow>
+                <TableCell style={{ fontWeight: "bold", color: "#1565c0" }}>Title</TableCell>
+                <TableCell style={{ fontWeight: "bold", color: "#1565c0" }}>Price</TableCell>
+                <TableCell style={{ fontWeight: "bold", color: "#1565c0" }}>Category</TableCell>
+                <TableCell style={{ fontWeight: "bold", color: "#1565c0" }}>Image</TableCell>
+                <TableCell style={{ fontWeight: "bold", color: "#1565c0" }}>Actions</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Container>
+            </TableHead>
+            <TableBody>
+              {customProducts.map((product) => (
+                <TableRow key={product.id} style={{ backgroundColor: "#ffffff" }}>
+                  <TableCell>{product.title}</TableCell>
+                  <TableCell>${Number(product.price).toFixed(2)}</TableCell>
+                  <TableCell>{product.category}</TableCell>
+                  <TableCell>
+                    <img
+                      src={product.image}
+                      alt={product.title}
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        objectFit: "cover",
+                        borderRadius: "4px",
+                        border: "1px solid #ddd",
+                      }}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      size="small"
+                      style={{ marginRight: "5px" }}
+                      onClick={() => handleEditProduct(product.id)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      size="small"
+                      onClick={() => handleDeleteProduct(product.id)}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table> */}
+        </TableContainer>
+      </div>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+      >
+        <Alert
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </div>
   );
 }
